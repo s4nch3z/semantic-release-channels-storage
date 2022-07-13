@@ -1,2 +1,2 @@
-# semantic-release-channels-storage
-Alternative storage solutions for Semantic Release channels
+# semantic-release-notes-storage
+Alternative storage solutions for Semantic Release notes
