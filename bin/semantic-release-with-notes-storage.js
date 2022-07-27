@@ -42,13 +42,34 @@ ritm(["execa"], function (exports, name, basedir) {
   const version = require(path.join(basedir, 'package.json')).version
   logger.debug('Intercepting %s@%s', name, version);
   let handler = {
-    get(target, propKey, receiver) {
-        const origMethod = target[propKey];
-        return function (...args) {
-            let result = origMethod.apply(this, args);
-            logger.debug(`Function: ${propKey}\nArgs: ${JSON.stringify(args, null, 2)}\nReturn: ${JSON.stringify(result, null, 2)}`);
-            return result;
-        };
+    apply: function(target, thisArg, argumentsList) {
+      if (argumentsList.length > 1 && argumentsList[0] === 'git') {
+        if ((argumentsList[1].length === 4 && argumentsList[1][0] === 'fetch' && argumentsList[1][3].startsWith('+refs/notes/'))
+        || (argumentsList[1].length === 5 && argumentsList[1][0] === 'fetch' && argumentsList[1][4].startsWith('+refs/notes/'))) {
+          logger.debug('Handling fetchNotes with noop');
+          logger.debug(argumentsList[1]);
+        }
+
+        if (argumentsList[1].length === 3 && argumentsList[1][0] === 'push' && argumentsList[1][2].startsWith('refs/notes/')) {
+          logger.debug('Handling pushNotes');
+          logger.debug(argumentsList[1]);
+        }
+
+        if (argumentsList[1].length === 8 && argumentsList[1][0] === 'notes' && argumentsList[1][3] === 'add') {
+          logger.debug('Handling addNote');
+          logger.debug(argumentsList[1]);
+        }
+
+        if (argumentsList[1].length === 5 && argumentsList[1][0] === 'notes' && argumentsList[1][3] === 'show') {
+          logger.debug('Handling getNote');
+          logger.debug(argumentsList[1]);
+        }
+
+      }
+
+      let result = target.apply(thisArg, argumentsList);
+      // logger.debug(`Function: execa\nArgs: ${JSON.stringify(argumentsList, null, 2)}\nReturn: ${JSON.stringify(result, null, 2)}`);
+      return result;
     }
   };
   return new Proxy(exports, handler);
