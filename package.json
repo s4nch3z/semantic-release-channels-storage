@@ -1,0 +1,50 @@
+{
+  "name": "semantic-release-notes-storage",
+  "version": "0.0.1",
+  "description": "Alternative storage solutions for Semantic Release notes",
+  "main": "index.js",
+  "repository": "https://github.com/s4nch3z/semantic-release-notes-storage.git",
+  "author": "Alexander Prokopyev <alex@developer.tools>",
+  "license": "MIT",
+  "bin": {
+    "semantic-release-with-notes-storage": "bin/semantic-release-with-notes-storage.js"
+  },
+  "bugs": {
+    "url": "https://github.com/s4nch3z/semantic-release-notes-storage/issues"
+  },
+  "private": false,
+  "keywords": [
+    "gitlab",
+    "git-notes",
+    "notes",
+    "storage",
+    "semantic-release",
+    "version"
+  ],
+  "files": [
+    "lib",
+    "index.js"
+  ],
+  "engines": {
+    "node": ">=14.17"
+  },
+  "peerDependencies": {
+    "semantic-release": ">=19.0.0 <20.0.0"
+  },
+  "devDependencies": {
+    "semantic-release-notes-storage": "file:/Users/s4nch3z/develop/semantic-release-notes-storage",
+    "yarn": "^1.22.19"
+  },
+  "dependencies": {
+    "@google-cloud/storage": "^6.2.2",
+    "@semantic-release/error": "^3.0.0",
+    "require-in-the-middle": "^5.1.0",
+    "semantic-release": "^19.0.3"
+  },
+  "release": {
+    "branches": [
+      "initial-implementation",
+      "main"
+    ]
+  }
+}
